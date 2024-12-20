@@ -14,6 +14,7 @@ var stst = []struct {
 	{"foo", "foo"},
 	{"bar", "bar"},
 	{"baz", "baz"},
+	{"Brasil", "Brasil"},
 }
 
 func TestSuccessFoo(t *testing.T) {
