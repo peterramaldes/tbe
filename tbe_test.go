@@ -1,13 +1,51 @@
 package tbe_test
 
 import (
+	"bufio"
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"os"
+	"strings"
 	"testing"
 
 	"github.com/peterramaldes/tbe"
 )
+
+func TestFooTxt(t *testing.T) {
+	testdata := "testdata/testfoo.txt"
+	f, err := os.Open(testdata)
+	if err != nil {
+		t.Fatalf("testfoo: open %s:%s", testdata, err)
+	}
+	defer f.Close()
+
+	s := bufio.NewScanner(f)
+
+	for lineno := 1; s.Scan(); lineno++ {
+		line := s.Text()
+		if len(line) == 0 || line[0] == '#' {
+			// Skip comments
+			continue
+		}
+
+		f := strings.Fields(line)
+		if len(f) != 2 {
+			t.Errorf("%s:%d: wrong field count", testdata, lineno)
+			continue
+		}
+
+		input, expectedOutput := f[0], f[1]
+		output, err := tbe.Foo(input)
+		if err != nil {
+			t.Fatalf("Foo(%v) received a unexpected error: %v", input, err)
+		}
+
+		if expectedOutput != output {
+			t.Errorf("Foo(%v) = %v, want %v", input, output, expectedOutput)
+		}
+	}
+}
 
 func TestExhaustive(t *testing.T) {
 	data := make([]string, 999)

@@ -1,0 +1,7 @@
+# Table 1: Make sure the allowed words work as expected
+foo foo
+bar bar
+baz baz
+
+# Table 2: Some countries are allowed
+Brasil Brasil
