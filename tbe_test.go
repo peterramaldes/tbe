@@ -38,10 +38,8 @@ func TestFooTxt(t *testing.T) {
 		input, expectedOutput := f[0], f[1]
 		output, err := tbe.Foo(input)
 		if err != nil {
-			t.Fatalf("Foo(%v) received a unexpected error: %v", input, err)
-		}
-
-		if expectedOutput != output {
+			t.Errorf("Foo(%v) received a unexpected error: %v", input, err)
+		} else if expectedOutput != output {
 			t.Errorf("Foo(%v) = %v, want %v", input, output, expectedOutput)
 		}
 	}
